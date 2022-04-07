@@ -1306,8 +1306,20 @@ void waitForPPS(bool verbose, pps_handle_t *pps_handle, int *pps_mode){
 			printf("Error running NTP check: %i\n", rv);
 		}
 		else {
-			printf("NTP adjusted\n");
-			g.ntpChecked = true;
+			printf("NTP adjusted, writing %s\n", g.ntpCheckFile);
+
+			FILE* ft = fopen(g.ntpCheckFile, "w");
+
+			if (ft != NULL){
+				fprintf(ft, "%lu\n", (unsigned long)time(NULL));
+				fclose(ft);
+				ft = NULL;
+				g.ntpChecked = true;				
+			}
+			else {
+				printf("Could not write timestamp file\n");
+			}
+				
 		}
 	
 	}
@@ -1401,8 +1413,20 @@ void waitForPPS(bool verbose, pps_handle_t *pps_handle, int *pps_mode){
 				printf("Error running NTP check: %i\n", rv);
 			}
 			else {
-				printf("NTP adjusted\n");
-				g.ntpChecked = true;
+				printf("NTP adjusted, writing %s\n", g.ntpCheckFile);
+
+				FILE* ft = fopen(g.ntpCheckFile, "w");
+				
+				if (ft != NULL){
+					fprintf(ft, "%lu\n", (unsigned long)time(NULL));
+					fclose(ft);
+					ft = NULL;
+					g.ntpChecked = true;				
+				}
+				else {
+					printf("Could not write timestamp file: %d\n", errno);
+				}
+
 			}
 		
 		}

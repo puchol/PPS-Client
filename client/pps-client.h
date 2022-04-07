@@ -139,6 +139,7 @@
 #define SEGREGATE 8388608
 #define NTPCHECK 16777216
 #define NTPSERVER 33554432
+#define NTPCHECKFILE 67108864
 
 /*
  * Struct for passing arguments to and from threads
@@ -247,6 +248,7 @@ struct G {
 	bool checkNTP;									//!< Enable checking NTP at startup
 	char ntpServer[40];								//!< NTP server to use for checking
 	bool ntpChecked;								//!< Flag set when we have done a first NTP adjustment
+	char ntpCheckFile[50];							//!< Holds the file to be used for storing the checked timestamp
 	
 	char linuxVersion[20];							//!< Array for recording the Linux version.
 	/**

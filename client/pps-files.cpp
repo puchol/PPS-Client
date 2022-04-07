@@ -42,7 +42,7 @@ const char *nistTime_file = "/nist_out";
 const char *integral_state_file = "/.pps-last-state";
 const char *home_file = "/pps";
 const char *cpuinfo_file = "/cpuinfo";
-
+const char *ntp_sync_file = "/home/starlink/.ntp-last-sync";
 const char *space = " ";
 const char *num = "0123456789.";
 
@@ -97,7 +97,8 @@ const char *valid_config[] = {
 		"procdir",
 		"segregate",
 		"ntpcheck",
-		"ntpServer"
+		"ntpServer",
+		"ntpCheckFile"
 };
 
 /**
@@ -1398,7 +1399,12 @@ int getSharedConfigs(void){
 	if (sp != NULL){
 		strcpy(g.ntpServer, sp);
 	}
-	
+
+	sp = getString(NTPCHECKFILE);
+	if (sp != NULL){
+		strcpy(g.ntpCheckFile, sp);
+	}
+		
 	g.ntpChecked = false;
 	
 	return 0;
@@ -1635,7 +1641,12 @@ int getConfigs(void){
 	if (sp != NULL){
 		strcpy(g.ntpServer, sp);
 	}
-	
+
+	sp = getString(NTPCHECKFILE);
+	if (sp != NULL){
+		strcpy(g.ntpCheckFile, sp);
+	}
+		
 	return 0;
 }
 
